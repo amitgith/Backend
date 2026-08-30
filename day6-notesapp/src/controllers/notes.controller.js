@@ -13,6 +13,9 @@ const createNotesController = async (req, res) => {
     });
   } catch (error) {
     console.log("error in creation", error);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
   }
 };
 
@@ -25,6 +28,61 @@ const getAllnotesController = async (req, res) => {
     });
   } catch (error) {
     console.log("error in get notes api", error);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
   }
 };
-module.exports = { createNotesController, getAllnotesController };
+const getSingleNoteController = async (req, res) => {
+  try {
+    let noteId = req.params.id;
+    let note = await NotesModel.findById(noteId);
+    res.status(200).json({
+      message: "Note fetched successfully",
+      data: note,
+    });
+  } catch (error) {
+    console.log("error in single note api", error);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+const updatedNotesController = async (req, res) => {
+  try {
+    let noteId = req.params.id;
+    let body = req.body;
+    let updatedNote = await NotesModel.findByIdAndUpdate(noteId, body, {
+      new: true,
+    });
+    return res.status(200).json({
+      message: "Note Updated Successfully",
+      data: updatedNote,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+const deleteNotesController = async (req, res) => {
+  try {
+    let noteId = req.params.id;
+    await NotesModel.findByIdAndDelete(noteId);
+     return res.status(200).json({
+      message: "Note deleted Successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+module.exports = {
+  createNotesController,
+  getAllnotesController,
+  getSingleNoteController,
+  updatedNotesController,
+  deleteNotesController
+};
