@@ -1,5 +1,6 @@
 const express = require("express");
 const connectDb = require("./config/db");
+const NotesModel = require("./models/note.model");
 
 const app = express();
 //middleware
@@ -10,10 +11,10 @@ app.get("/", (req, res) => {
   res.send("Ok get it");
 });
 
-app.post("/create", (req, res) => {
+app.post("/create", async (req, res) => {
   let { title, description } = req.body;
   //mongodb send data logic
-  const newNote = NotesModel.create({
+  const newNote = await NotesModel.create({
     title,
     description,
   });
