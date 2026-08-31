@@ -53,7 +53,9 @@ const singleEntityUpdateController = async (req, res) => {
   try {
     let noteId = req.params.id;
     let body = req.body;
-    let updatedNote = await NotesModel.findByIdAndUpdate(noteId, body);
+    let updatedNote = await NotesModel.findByIdAndUpdate(noteId, body, {
+      new: true,
+    });
     res.status(200).json({
       message: "Note fetched successfully",
       data: updatedNote,
@@ -101,5 +103,5 @@ module.exports = {
   getSingleNoteController,
   updatedNotesController,
   deleteNotesController,
-  singleEntityUpdateController
+  singleEntityUpdateController,
 };
