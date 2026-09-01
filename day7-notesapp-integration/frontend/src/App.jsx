@@ -91,6 +91,7 @@ const App = () => {
           className="p-2 outline-none text-xl rounded border border-black"
           type="text"
           placeholder="Description"
+          
           minLength={10}
           required
         />
