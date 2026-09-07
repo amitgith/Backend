@@ -101,4 +101,25 @@ export const singleEntityUpdateController = async (req, res) => {
   }
 };
 
-
+export const deleteNoteController = async (req, res) => {
+  try {
+    const noteId = req.params.id;
+    const deleteId = await noteModel.findByIdAndDelete(noteId);
+    if (!deleteId) {
+      return res.status(403).json({
+        success: false,
+        message: "delete note not foound",
+      });
+    }
+    res.status(200).json({
+      message: "Note deleted successfully",
+      data: deleteId,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server error",
+    });
+  }
+};
