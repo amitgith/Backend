@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const postSchema = new mongoose.Schema({
   caption: {
-    trype: String,
+    type: String,
     required: [true, "caption is required"],
     minLength: 3,
     maxLength: 20,

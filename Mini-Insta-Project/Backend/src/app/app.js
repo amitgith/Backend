@@ -1,9 +1,12 @@
 import express from "express";
+import postRoutes from "../routes/post.route.js";
 const app = express();
+// middleware
+app.use(express.json());
 app.get("/", (req, res) => {
   try {
     res.status(200).json({
-      success: false,
+      success: true,
       message: "ok get it",
     });
   } catch (error) {
@@ -14,4 +17,5 @@ app.get("/", (req, res) => {
     });
   }
 });
+app.use("/api/post", postRoutes);
 export default app;
